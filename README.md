@@ -3,6 +3,12 @@ A simple clock with weather info, meant to be used on a Rasperry Pi with its 7" 
 
 ![Screenshot](screenshot.png)
 
+Optionally, it can be configured to monitor a [Subsonic](http://www.subsonic.org/) instance and, when something is playing, replace the weather forecast with media info:
+
+![Subsonic support](SubsonicSupport.png)
+
+(it should also work with other streaming apps that implement Subsonic's API, such as [Ampache](http://ampache.org/) or [Madsonic](http://madsonic.org/)...)
+
 # Clock setup
 
 You'll need an API key for https://openweathermap.org in order to get the required information. Once you have it, edit **backend/config-dist.php** and save it as **backend/config.php**

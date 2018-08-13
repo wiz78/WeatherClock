@@ -1,4 +1,5 @@
 var forecastTpl;
+var lastCoverArt;
 
 document.observe( 'dom:loaded', function()
 {
@@ -10,6 +11,7 @@ document.observe( 'dom:loaded', function()
 	
 	updateClock();
 	updateWeather();
+	updateSubsonic();
 } );
 
 function updateClock()
@@ -37,7 +39,7 @@ function updateWeather()
 							var tempUnit = json.tempUnit;
 							
 							parseWeather( json.current, tempUnit );
-							parseForecast( json.forecast, json.forecastItems, tempUnit );
+							parseForecast( json.forecast, json.forecastItems );
 						},
 						onComplete: updateWeather.delay( 60 * 30 )
 					  } );
@@ -62,7 +64,7 @@ function parseWeather( json, tempUnit )
 	$( 'humidity' ).update( Math.round( json.main.humidity ) + '%' );
 }
 
-function parseForecast( json, numItems, tempUnit )
+function parseForecast( json, numItems)
 {
 	var len = json.list[ 0 ];
 	var forcast = $( 'forecast' );
@@ -73,11 +75,55 @@ function parseForecast( json, numItems, tempUnit )
 		var item = json.list[ i ];
 
 		forecast.insert( forecastTpl.evaluate( {
-			idx:	i,
-			temp:	Math.round( item.main.temp ) + ' ' + tempUnit,
-			hour: 	fmtTimePart( new Date( item.dt * 1000 ).getHours() )
+			idx:		i,
+			temp:		Math.round( item.main.temp ),
+			humidity:	Math.round( item.main.humidity ),
+			hour: 		fmtTimePart( new Date( item.dt * 1000 ).getHours() )
 		} ));
 		
 		updateWeatherIcon( item.weather, $( 'forecast' + i ).down( '.icon' ));
 	}
+}
+
+function updateSubsonic()
+{
+	new Ajax.Request( 'backend/subsonic.php',
+					  {
+						onSuccess: function( response )
+						{
+							var json = response.responseJSON;
+
+							if( json.enabled ) {
+								var forecast = $( 'forecast' );
+								var mediaInfo = $( 'nowPlaying' );
+
+								updateSubsonic.delay( 1 );
+
+								if( json.title ) {
+
+									if( json.coverArtId != lastCoverArt ) {
+										var coverArt = $( 'coverArt' );
+
+										lastCoverArt = json.coverArtId;
+
+										coverArt.innerHTML = '';
+
+										if( json.coverArt )
+											coverArt.insert( new Element( 'img', { src: json.coverArt } ));
+									}
+
+									$( 'title' ).update( json.title );
+									$( 'artist' ).update( json.artist );
+									$( 'album' ).update( json.album );
+
+									mediaInfo.show();
+									forecast.hide();
+
+								} else {
+									forecast.show();
+									mediaInfo.hide();
+								}
+							}
+						}
+					  } );
 }

@@ -34,21 +34,48 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+*
+{
+	box-sizing:				border-box;
+}
+
+html,
 body
 {
+	margin:					0;
+	padding:				0;
+	height:					100%;
+}
+
+body
+{
+	min-height:				100%;
 	background-color:		black;
 	color:					white;
 	font-family:			Lato, sans-serif;
+	display:				flex;
+	flex-direction:			column;
+}
+
+#forecast,
+#nowPlaying
+{
+	flex:					1;
 }
 
 #topRow
 {
 	display:				grid;
-	grid-template-columns:	65% 35%;
+	grid-template-columns:	69% 31%;
 	font-family:			Audiowide, sans-serif;
-	font-size:				18vw;
-	padding-left:			.35ex;
-	padding-right:			.35ex;
+	font-size:				16vw;
+	padding-left:			.1ex;
+	padding-right:			.1ex;
+}
+
+#clock
+{
+	white-space:			nowrap;
 }
 
 #hour::after
@@ -107,4 +134,56 @@ body
 {
 	width:					80%;
 	height:					auto;
+}
+
+#forecast > div .humidity
+{
+	font-size:				3.5vh;
+}
+
+#nowPlaying
+{
+	display:				flex;
+	font-size:				16vw;
+	padding:				0 .1ex .1ex .1ex;
+}
+
+#nowPlaying > div
+{
+	align-self:				center;
+}
+
+#coverArt
+{
+	height:					100%;
+	flex:					1 1 40%;
+	position:				relative;
+}
+
+#coverArt img
+{
+	max-width:				100%;
+	max-height:				100%;
+	display:				block;
+	position:				absolute;
+	top:					0;
+	left:					0;
+}
+
+#mediaInfo
+{
+	flex:					1 1 60%;
+	padding-left:			.4ex;
+}
+
+#title
+{
+	font-size:				10vh;
+	margin:					.2em 0;
+}
+
+#album,
+#artist
+{
+	font-size:				5vh;
 }
