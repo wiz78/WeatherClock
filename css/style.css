@@ -110,6 +110,7 @@ body
 {
 	align-self:				center;
 	text-align:				center;
+	padding-right:			1ex;
 }
 
 #weatherIcon svg
