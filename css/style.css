@@ -63,6 +63,14 @@ body
 	flex:					1;
 }
 
+#date
+{
+	text-align:				center;
+	font-size:				6.2vh;
+	margin-top:				-.1em;
+	margin-bottom:			-.2em;
+}
+
 #topRow
 {
 	display:				flex;

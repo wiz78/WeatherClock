@@ -17,7 +17,14 @@ document.observe( 'dom:loaded', function()
 function updateClock()
 {
 	var date = new Date();
-	
+
+	$( 'date' ).update( date.toLocaleDateString( navigator.language, {
+		weekday: 'long',
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric'
+	} ));
+
 	$( 'hour' ).update( fmtTimePart( date.getHours() ));
 	$( 'minute' ).update( fmtTimePart( date.getMinutes() ));
 	
@@ -124,6 +131,10 @@ function updateSubsonic()
 									mediaInfo.hide();
 								}
 							}
-						}
-					  } );
+						},
+					  	onFailure: function()
+					  	{
+							updateSubsonic.delay( 30 ); 
+					  	}
+				   	} );
 }
