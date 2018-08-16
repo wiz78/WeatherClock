@@ -65,8 +65,7 @@ body
 
 #topRow
 {
-	display:				grid;
-	grid-template-columns:	69% 31%;
+	display:				flex;
 	font-family:			Audiowide, sans-serif;
 	font-size:				16vw;
 	padding-left:			.1ex;
@@ -76,6 +75,8 @@ body
 #clock
 {
 	white-space:			nowrap;
+	text-align:				center;
+	flex:					1 1 45%;
 }
 
 #hour::after
@@ -88,14 +89,32 @@ body
 
 #weather
 {
-	font-size:				10vh;
-	justify-self:			end;
+	flex:					1 1 content;
 	align-self:				center;
+	display:				flex;
+	font-size:				10vh;
+}
+
+#todayData,
+#weatherIcon
+{
+	flex:					1 0 content;
+}
+
+#todayData
+{
+	white-space:			nowrap;
+}
+
+#weatherIcon
+{
+	align-self:				center;
+	text-align:				center;
 }
 
 #weatherIcon svg
 {
-	width:					.8em;
+	width:					1.5em;
 	height:					auto;
 }
 
@@ -186,4 +205,5 @@ body
 #artist
 {
 	font-size:				5vh;
+	color:					orange;
 }
