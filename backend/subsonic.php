@@ -33,32 +33,33 @@ if( $data->enabled ) {
 
 		$entries = $nowPlaying->nowPlaying->entry;
 
-		foreach( SUBSONIC_MONITORED_PLAYERS as $player ) {
+		if( is_array( $entries ))
+			foreach( SUBSONIC_MONITORED_PLAYERS as $player ) {
 
-			$player = strtolower( $player );
+				$player = strtolower( $player );
 
-			foreach( $entries as $entry ) {
+				foreach( $entries as $entry ) {
 
-				$found = (( $player === '*' ) || ( strtolower( $entry->playerName ) === $player )) &&
-				   		 ( $entry->duration > $entry->minutesAgo * 60 );
+					$found = (( $player === '*' ) || ( strtolower( $entry->playerName ) === $player )) &&
+							 ( $entry->duration > $entry->minutesAgo * 60 );
 
-				if( $found ) {
+					if( $found ) {
 
-					$data->title = $entry->title;
-					$data->album = $entry->album;
-					$data->artist = $entry->artist;
-					$data->coverArtId = $entry->coverArt;
+						$data->title = $entry->title;
+						$data->album = $entry->album;
+						$data->artist = $entry->artist;
+						$data->coverArtId = $entry->coverArt;
 
-					if( !empty( $entry->coverArt ))
-						$data->coverArt = getUrl( 'getCoverArt' ) . '&id=' . urlencode( $entry->coverArt );
+						if( !empty( $entry->coverArt ))
+							$data->coverArt = getUrl( 'getCoverArt' ) . '&id=' . urlencode( $entry->coverArt );
 
-					break;
+						break;
+					}
 				}
-			}
 
-			if( $found )
-				break;
-		}
+				if( $found )
+					break;
+			}
 	}
 }
 
