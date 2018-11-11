@@ -96,6 +96,9 @@ function updateSubsonic()
 {
 	new Ajax.Request( 'backend/subsonic.php',
 					  {
+						parameters: {
+							lastCoverArtId: lastCoverArt
+						},
 						onSuccess: function( response )
 						{
 							var json = response.responseJSON;
@@ -104,7 +107,7 @@ function updateSubsonic()
 								var forecast = $( 'forecast' );
 								var mediaInfo = $( 'nowPlaying' );
 
-								updateSubsonic.delay( 1 );
+								updateSubsonic.delay( 5 );
 
 								if( json.title ) {
 
